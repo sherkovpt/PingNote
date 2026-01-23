@@ -17,7 +17,6 @@ export class RedisStorage implements Storage {
     constructor(redisUrl: string) {
         this.redis = new Redis(redisUrl, {
             maxRetriesPerRequest: 3,
-            retryDelayOnFailover: 100,
         });
 
         this.redis.on('error', (err) => {
@@ -153,24 +152,24 @@ export class RedisStorage implements Storage {
         }
     }
 
-    private mapNote(stored: any): Note {
+    private mapNote(stored: Record<string, unknown>): Note {
         return {
-            id: stored.id,
-            token: stored.token,
-            shortCode: stored.shortCode,
-            createdAt: stored.createdAt,
-            expiresAt: stored.expiresAt,
-            oneTime: stored.oneTime,
-            viewCount: stored.viewCount,
-            consumed: stored.consumed,
-            liveMode: stored.liveMode,
-            e2ee: stored.e2ee,
+            id: stored.id as string,
+            token: stored.token as string,
+            shortCode: stored.shortCode as string,
+            createdAt: stored.createdAt as number,
+            expiresAt: stored.expiresAt as number,
+            oneTime: stored.oneTime as boolean,
+            viewCount: stored.viewCount as number,
+            consumed: stored.consumed as boolean,
+            liveMode: stored.liveMode as boolean,
+            e2ee: stored.e2ee as boolean,
             payload: {
-                plaintext: stored.plaintext || undefined,
-                ciphertext: stored.ciphertext || undefined,
-                iv: stored.iv || undefined,
+                plaintext: (stored.plaintext as string) || undefined,
+                ciphertext: (stored.ciphertext as string) || undefined,
+                iv: (stored.iv as string) || undefined,
             },
-            deletedAt: stored.deletedAt,
+            deletedAt: (stored.deletedAt as number) || null,
         };
     }
 

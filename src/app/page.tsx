@@ -12,12 +12,7 @@ import {
 import { TTL_PRESETS } from '@/lib/types';
 import { generateKey, encrypt } from '@/lib/crypto';
 
-// Icons
-const LinkIcon = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-  </svg>
-);
+import Link from 'next/link';
 
 const QRIcon = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -81,7 +76,15 @@ export default function HomePage() {
     setState('creating');
 
     try {
-      let payload: any = {
+      const payload: {
+        ttlSeconds: number;
+        oneTime: boolean;
+        e2ee: boolean;
+        liveMode: boolean;
+        text?: string;
+        ciphertext?: string;
+        iv?: string;
+      } = {
         ttlSeconds: TTL_PRESETS[ttl as keyof typeof TTL_PRESETS],
         oneTime,
         e2ee,
@@ -129,9 +132,10 @@ export default function HomePage() {
       setState('ready');
       addToast('success', `Nota criada! Expira em ${TTL_OPTIONS.find(o => o.value === ttl)?.label}`);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating note:', error);
-      addToast('error', error.message || 'Erro ao criar nota');
+      const errorMessage = error instanceof Error ? error.message : 'Erro ao criar nota';
+      addToast('error', errorMessage);
       setState('empty');
     }
   };
@@ -163,12 +167,12 @@ export default function HomePage() {
             <span className="gradient-text">Ping</span>
             <span className="text-text-primary">Note</span>
           </h1>
-          <a
+          <Link
             href="/c"
             className="text-sm text-text-secondary hover:text-text-primary transition-colors"
           >
             Inserir código
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -347,9 +351,9 @@ export default function HomePage() {
           <p>
             Partilha notas de forma rápida e segura.
             {' '}
-            <a href="/about" className="text-accent hover:underline">
+            <Link href="/about" className="text-accent hover:underline">
               Saber mais
-            </a>
+            </Link>
           </p>
         </div>
       </footer>

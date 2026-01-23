@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export const metadata = {
     title: 'Sobre - PingNote',
@@ -11,16 +12,16 @@ export default function AboutPage() {
             {/* Header */}
             <header className="py-6 px-4 border-b border-border">
                 <div className="container mx-auto max-w-2xl flex items-center justify-between">
-                    <a href="/" className="text-2xl font-bold">
+                    <Link href="/" className="text-2xl font-bold">
                         <span className="gradient-text">Ping</span>
                         <span className="text-text-primary">Note</span>
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                         href="/"
                         className="text-sm text-text-secondary hover:text-text-primary transition-colors"
                     >
                         Criar nota
-                    </a>
+                    </Link>
                 </div>
             </header>
 
@@ -132,9 +133,9 @@ export default function AboutPage() {
             {/* Footer */}
             <footer className="py-4 px-4 border-t border-border">
                 <div className="container mx-auto max-w-2xl text-center text-sm text-text-muted">
-                    <a href="/" className="hover:text-accent transition-colors">
+                    <Link href="/" className="hover:text-accent transition-colors">
                         PingNote
-                    </a>
+                    </Link>
                     {' • '}
                     Partilha de notas instantâneas
                 </div>

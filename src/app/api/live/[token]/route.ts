@@ -1,13 +1,11 @@
 import { NextRequest } from 'next/server';
 import { getStorage } from '@/lib/storage';
 import { isValidToken } from '@/lib/tokens';
+import { connections, broadcastUpdate } from '@/lib/broadcast';
 
 interface RouteParams {
     params: Promise<{ token: string }>;
 }
-
-// Store active SSE connections per token
-const connections = new Map<string, Set<ReadableStreamDefaultController>>();
 
 // GET /api/live/[token] - Server-Sent Events for live updates
 export async function GET(
@@ -61,24 +59,8 @@ export async function GET(
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
+            'X-Accel-Buffering': 'no', // Disable buffering for Nginx/proxies
         },
-    });
-}
-
-// Helper function to broadcast updates to all connected clients
-export function broadcastUpdate(token: string, payload: any) {
-    const tokenConnections = connections.get(token);
-    if (!tokenConnections) return;
-
-    const data = `data: ${JSON.stringify({ type: 'update', payload, timestamp: Date.now() })}\n\n`;
-    const encoded = new TextEncoder().encode(data);
-
-    tokenConnections.forEach((controller) => {
-        try {
-            controller.enqueue(encoded);
-        } catch {
-            // Connection closed, will be cleaned up
-        }
     });
 }
 

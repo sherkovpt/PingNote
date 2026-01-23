@@ -4,9 +4,9 @@
  */
 
 const ALGORITHM = 'AES-GCM';
-const KEY_LENGTH = 256;
+
 const IV_LENGTH = 12; // 96 bits recommended for GCM
-const SALT_LENGTH = 16;
+
 
 /**
  * Generate a random encryption key and return as base64url
@@ -29,7 +29,7 @@ export async function encrypt(
 
     const cryptoKey = await crypto.subtle.importKey(
         'raw',
-        keyBytes,
+        keyBytes as BufferSource,
         { name: ALGORITHM },
         false,
         ['encrypt']
@@ -64,16 +64,16 @@ export async function decrypt(
 
     const cryptoKey = await crypto.subtle.importKey(
         'raw',
-        keyBytes,
+        keyBytes as BufferSource,
         { name: ALGORITHM },
         false,
         ['decrypt']
     );
 
     const decrypted = await crypto.subtle.decrypt(
-        { name: ALGORITHM, iv },
+        { name: ALGORITHM, iv: iv as BufferSource },
         cryptoKey,
-        ciphertext
+        ciphertext as BufferSource
     );
 
     const decoder = new TextDecoder();

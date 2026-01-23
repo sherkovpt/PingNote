@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button, useToast } from '@/components/ui';
 import { isValidShortCode } from '@/lib/tokens';
 
@@ -46,8 +47,7 @@ export default function EnterCodePage() {
             // Redirect to note
             router.push(`/n/${data.token}`);
 
-        } catch (error) {
-            console.error('Error resolving code:', error);
+        } catch {
             addToast('error', 'Erro ao procurar código');
             setLoading(false);
         }
@@ -64,10 +64,10 @@ export default function EnterCodePage() {
             {/* Header */}
             <header className="py-6 px-4 border-b border-border">
                 <div className="container mx-auto max-w-2xl flex items-center justify-between">
-                    <a href="/" className="text-2xl font-bold">
+                    <Link href="/" className="text-2xl font-bold">
                         <span className="gradient-text">Ping</span>
                         <span className="text-text-primary">Note</span>
-                    </a>
+                    </Link>
                 </div>
             </header>
 
@@ -117,12 +117,12 @@ export default function EnterCodePage() {
                     </form>
 
                     <div className="text-center mt-6">
-                        <a
+                        <Link
                             href="/"
                             className="text-sm text-text-secondary hover:text-accent transition-colors"
                         >
                             ← Voltar para criar nota
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </main>

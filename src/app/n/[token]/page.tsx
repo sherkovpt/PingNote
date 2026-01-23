@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button, CopyButton, useToast } from '@/components/ui';
 import { decrypt } from '@/lib/crypto';
 
@@ -48,11 +49,8 @@ export default function ViewNotePage() {
     const [error, setError] = useState<string>('');
     const { addToast } = useToast();
 
-    useEffect(() => {
-        loadNote();
-    }, [token]);
-
-    const loadNote = async () => {
+    // Wrap loadNote in useCallback to fix exhaustive-deps
+    const loadNote = useCallback(async () => {
         try {
             setState('loading');
 
@@ -96,7 +94,7 @@ export default function ViewNotePage() {
                         data.payload.iv,
                         keyMatch[1]
                     );
-                } catch (e) {
+                } catch {
                     setError('Erro ao desencriptar. Chave inválida?');
                     setState('error');
                     return;
@@ -122,7 +120,11 @@ export default function ViewNotePage() {
             setError('Erro ao carregar nota');
             setState('error');
         }
-    };
+    }, [token, addToast]); // Added dependencies
+
+    useEffect(() => {
+        loadNote();
+    }, [loadNote]);
 
     const handleDelete = async () => {
         if (!confirm('Apagar esta nota? Esta ação não pode ser revertida.')) {
@@ -140,7 +142,7 @@ export default function ViewNotePage() {
             } else {
                 addToast('error', 'Erro ao apagar nota');
             }
-        } catch (error) {
+        } catch {
             addToast('error', 'Erro ao apagar nota');
         }
     };
@@ -163,10 +165,10 @@ export default function ViewNotePage() {
             {/* Header */}
             <header className="py-6 px-4 border-b border-border">
                 <div className="container mx-auto max-w-2xl flex items-center justify-between">
-                    <a href="/" className="text-2xl font-bold">
+                    <Link href="/" className="text-2xl font-bold">
                         <span className="gradient-text">Ping</span>
                         <span className="text-text-primary">Note</span>
-                    </a>
+                    </Link>
                 </div>
             </header>
 
@@ -277,9 +279,9 @@ export default function ViewNotePage() {
             {/* Footer */}
             <footer className="py-4 px-4 border-t border-border">
                 <div className="container mx-auto max-w-2xl text-center text-sm text-text-muted">
-                    <a href="/" className="hover:text-accent transition-colors">
+                    <Link href="/" className="hover:text-accent transition-colors">
                         PingNote
-                    </a>
+                    </Link>
                     {' • '}
                     Partilha de notas instantâneas
                 </div>

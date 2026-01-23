@@ -45,7 +45,7 @@ export function CopyButton({
             addToast('success', successMessage);
 
             setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
+        } catch {
             addToast('error', 'Erro ao copiar');
         }
     };
@@ -110,7 +110,7 @@ export function CopyIconButton({
             setCopied(true);
             addToast('success', successMessage);
             setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
+        } catch {
             addToast('error', 'Erro ao copiar');
         }
     };

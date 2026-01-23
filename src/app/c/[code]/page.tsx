@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ResolveCodePage() {
     const params = useParams();
@@ -20,7 +21,7 @@ export default function ResolveCodePage() {
                     // Redirect to code entry page with error
                     router.replace('/c?error=not_found');
                 }
-            } catch (error) {
+            } catch {
                 router.replace('/c?error=error');
             }
         };
@@ -30,10 +31,12 @@ export default function ResolveCodePage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-                <div className="animate-spin w-8 h-8 border-2 border-accent border-t-transparent rounded-full mx-auto mb-4" />
-                <p className="text-text-secondary">A abrir nota...</p>
-            </div>
+            <Link
+                href="/"
+                className="inline-flex items-center px-6 py-3 bg-card-light hover:bg-card-hover border border-white/10 rounded-lg transition-colors text-text-primary font-medium"
+            >
+                Criar nova nota
+            </Link>
         </div>
     );
 }

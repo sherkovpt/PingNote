@@ -51,8 +51,8 @@ describe('Token Validation', () => {
         expect(isValidToken('')).toBe(false);
         expect(isValidToken('short')).toBe(false);
         expect(isValidToken('this-has-invalid-chars!@#')).toBe(false);
-        expect(isValidToken(null as any)).toBe(false);
-        expect(isValidToken(undefined as any)).toBe(false);
+        expect(isValidToken(null as unknown as string)).toBe(false);
+        expect(isValidToken(undefined as unknown as string)).toBe(false);
     });
 });
 

@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 
 // Mock crypto for Node environment
-beforeAll(() => {
+beforeAll(async () => {
     if (!globalThis.crypto) {
-        const { webcrypto } = require('crypto');
+        const { webcrypto } = await import('crypto');
+        // @ts-expect-error - Fixing missing type for webcrypto in global context
         globalThis.crypto = webcrypto;
     }
 });
