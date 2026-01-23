@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /n/
+Disallow: /c/
+Disallow: /api/
+
+# Notes and codes should not be indexed
+# They are private and temporary
