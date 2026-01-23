@@ -41,6 +41,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <div className="nebula-bg">
+          <div className="nebula-blob blob-1" />
+          <div className="nebula-blob blob-2" />
+          <div className="nebula-blob blob-3" />
+        </div>
         <ToastProvider>
           {children}
         </ToastProvider>

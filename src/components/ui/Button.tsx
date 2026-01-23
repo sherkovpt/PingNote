@@ -24,28 +24,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         const baseStyles = `
       inline-flex items-center justify-center gap-2 font-medium rounded-lg
       transition-all duration-200 cursor-pointer border-none
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary
-      disabled:opacity-50 disabled:cursor-not-allowed
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/50
+      disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
     `;
 
         const variantStyles = {
-            primary: `
-        bg-gradient-to-r from-accent to-accent-secondary text-white
-        shadow-md hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5
-        active:translate-y-0
-      `,
-            secondary: `
-        bg-bg-card text-text-primary border border-border
-        hover:bg-bg-elevated hover:border-accent/50
-      `,
-            ghost: `
-        bg-transparent text-text-secondary
-        hover:bg-bg-card hover:text-text-primary
-      `,
-            danger: `
-        bg-error/10 text-error border border-error/20
-        hover:bg-error/20 hover:border-error/40
-      `,
+            primary: 'btn-nebula-primary',
+            secondary: 'btn-nebula-secondary',
+            ghost: 'hover:bg-white/10 text-text-secondary hover:text-white',
+            danger: 'bg-error/10 text-error border border-error/20 hover:bg-error/20 hover:border-error/40 hover:shadow-[0_0_15px_rgba(255,0,85,0.4)]',
         };
 
         const sizeStyles = {

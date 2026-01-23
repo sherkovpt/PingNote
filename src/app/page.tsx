@@ -163,8 +163,8 @@ export default function HomePage() {
       {/* Header */}
       <header className="py-6 px-4 border-b border-border">
         <div className="container mx-auto max-w-2xl flex items-center justify-between">
-          <h1 className="text-2xl font-bold">
-            <span className="gradient-text">Ping</span>
+          <h1 className="text-3xl font-bold">
+            <span className="gradient-text-hero">Ping</span>
             <span className="text-text-primary">Note</span>
           </h1>
           <Link
