@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { Button, CopyButton, useToast } from '@/components/ui';
+import { Button, CopyButton, useToast, Skeleton } from '@/components/ui';
 import { decrypt } from '@/lib/crypto';
 
 // Icons
@@ -177,10 +177,19 @@ export default function ViewNotePage() {
                 <div className="container mx-auto max-w-2xl">
 
                     {/* Loading */}
+                    {/* Loading */}
                     {(state === 'loading' || state === 'decrypting') && (
-                        <div className="card text-center py-12">
-                            <div className="animate-spin w-8 h-8 border-2 border-accent border-t-transparent rounded-full mx-auto mb-4" />
-                            <p className="text-text-secondary">
+                        <div className="space-y-4">
+                            <div className="flex gap-2 mb-4">
+                                <Skeleton className="h-6 w-24 bg-white/5" />
+                                <Skeleton className="h-6 w-32 bg-white/5" />
+                            </div>
+                            <Skeleton className="h-[300px] w-full bg-white/5 rounded-xl" />
+                            <div className="flex gap-3 mt-4">
+                                <Skeleton className="h-12 w-32 bg-white/5 rounded-lg" />
+                                <Skeleton className="h-12 w-32 bg-white/5 rounded-lg" />
+                            </div>
+                            <p className="text-center text-text-secondary mt-4 animate-pulse">
                                 {state === 'decrypting' ? 'A desencriptar...' : 'A carregar nota...'}
                             </p>
                         </div>

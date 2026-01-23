@@ -13,6 +13,7 @@ import { TTL_PRESETS } from '@/lib/types';
 import { generateKey, encrypt } from '@/lib/crypto';
 
 import Link from 'next/link';
+import confetti from 'canvas-confetti';
 
 const QRIcon = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,6 +67,8 @@ export default function HomePage() {
   useEffect(() => {
     textareaRef.current?.focus();
   }, []);
+
+
 
   const handleCreate = async () => {
     if (!text.trim()) {
@@ -130,7 +133,22 @@ export default function HomePage() {
       });
 
       setState('ready');
-      addToast('success', `Nota criada! Expira em ${TTL_OPTIONS.find(o => o.value === ttl)?.label}`);
+
+      // UX Enhancements
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#00f3ff', '#bd00ff', '#ff0055']
+      });
+
+      // Auto-copy link
+      try {
+        await navigator.clipboard.writeText(url);
+        addToast('success', 'Nota criada e link copiado!');
+      } catch {
+        addToast('success', `Nota criada! Expira em ${TTL_OPTIONS.find(o => o.value === ttl)?.label}`);
+      }
 
     } catch (error: unknown) {
       console.error('Error creating note:', error);

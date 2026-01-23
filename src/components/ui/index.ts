@@ -5,3 +5,4 @@ export { Select, SegmentedControl } from './Select';
 export { Modal } from './Modal';
 export { CopyButton, CopyIconButton } from './CopyButton';
 export { QRModal, QRDisplay } from './QRModal';
+export { Skeleton } from './Skeleton';
